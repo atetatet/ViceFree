@@ -347,6 +347,16 @@ class FontService {
       color: theme.onPrimary,
     );
   }
+
+  TextStyle s50w700(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
+    return GoogleFonts.roboto(
+      fontSize: 50,
+      fontWeight: FontWeight.w700,
+      color: theme.onPrimary,
+    );
+  }
 }
 
 extension StringExtension on String {

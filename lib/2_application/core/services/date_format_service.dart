@@ -23,13 +23,13 @@ String timeAgo(int timestamp) {
   Duration difference = now.difference(dateTime);
 
   if (difference.inSeconds < 60) {
-    return '${difference.inSeconds} second${difference.inSeconds == 1 ? '' : 's'} ago';
+    return '${difference.inSeconds} second${difference.inSeconds == 1 ? '' : 's'} ';
   } else if (difference.inMinutes < 60) {
-    return '${difference.inMinutes} minute${difference.inMinutes == 1 ? '' : 's'} ago';
+    return '${difference.inMinutes} minute${difference.inMinutes == 1 ? '' : 's'} ';
   } else if (difference.inHours < 24) {
-    return '${difference.inHours} hour${difference.inHours == 1 ? '' : 's'} ago';
+    return '${difference.inHours} hour${difference.inHours == 1 ? '' : 's'} ';
   } else if (difference.inDays < 30) {
-    return '${difference.inDays} day${difference.inDays == 1 ? '' : 's'} ago';
+    return '${difference.inDays} day${difference.inDays == 1 ? '' : 's'} ';
   } else if (difference.inDays < 365) {
     return '${(difference.inDays / 30).round()} month${(difference.inDays / 30).round() == 1 ? '' : 's'} ago';
   } else {

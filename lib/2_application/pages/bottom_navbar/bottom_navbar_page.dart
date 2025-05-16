@@ -60,15 +60,15 @@ class _BottomNavbarPageState extends State<BottomNavbarPage> {
         label: 'Dashboard',
         labelStyle: fontService.bottomNavbarLabel(context),
       ),
-      CurvedNavigationBarItem(
-        child: Icon(
-          FontAwesomeIcons.circleUser,
-          size: 25,
-          color: Colors.white,
-        ),
-        label: 'Profile',
-        labelStyle: fontService.bottomNavbarLabel(context),
-      ),
+      // CurvedNavigationBarItem(
+      //   child: Icon(
+      //     FontAwesomeIcons.circleUser,
+      //     size: 25,
+      //     color: Colors.white,
+      //   ),
+      //   label: 'Profile',
+      //   labelStyle: fontService.bottomNavbarLabel(context),
+      // ),
       CurvedNavigationBarItem(
         child: Icon(
           Icons.settings,
@@ -111,10 +111,7 @@ class _BottomNavbarPageState extends State<BottomNavbarPage> {
                   router.go('/home');
                   break;
                 case 1:
-                  router.go('/home');
-                  break;
-                case 2:
-                  router.go('/home');
+                  router.go('/settings');
                   break;
                 default:
               }
