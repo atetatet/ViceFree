@@ -1,3 +1,4 @@
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:vicefree/0_data/models/vices_model.dart';
 import 'package:vicefree/2_application/core/services/sqflite_service.dart';
 import 'package:bloc/bloc.dart';
@@ -9,6 +10,8 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   List<VicesModel> list = [];
+  late BannerAd bannerAd;
+  bool isAdLoaded = false;
 
   Future<void> onInitial() async {
     emit(Loading());
@@ -25,6 +28,21 @@ class HomeCubit extends Cubit<HomeState> {
       VicesModel model = VicesModel.fromJson(item);
       list.add(model);
     }
+
+    bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // test ad unit
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          isAdLoaded = true;
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print('Ad failed to load: $error');
+        },
+      ),
+    )..load();
 
     emit(Success());
   }

@@ -29,6 +29,7 @@ dependencies:
   flutter_colorpicker: ^1.1.0
   equatable: ^2.0.7
   package_info_plus: ^8.1.1
+  google_mobile_ads: ^6.0.0
 
 dev_dependencies:
   flutter_test:

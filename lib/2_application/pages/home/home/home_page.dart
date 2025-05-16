@@ -3,12 +3,14 @@
 import 'dart:io';
 
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:vicefree/2_application/core/services/date_format_service.dart';
 import 'package:vicefree/2_application/core/services/font_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vicefree/2_application/core/services/sizedbox_service.dart';
 import 'package:vicefree/2_application/core/widgets/button.dart';
+import 'package:vicefree/2_application/core/widgets/empty.dart';
 import 'package:vicefree/2_application/core/widgets/loading.dart';
 import 'package:vicefree/2_application/core/widgets/scaffold.dart';
 import 'package:vicefree/2_application/pages/home/home/cubit/home_cubit.dart';
@@ -80,7 +82,17 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-        SizedboxService.h40,
+        SizedboxService.h10,
+        cubit.isAdLoaded
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: SizedBox(
+                  width: cubit.bannerAd.size.width.toDouble(),
+                  height: cubit.bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: cubit.bannerAd),
+                ),
+              )
+            : EmptyWidget(),
         Expanded(
           child: RefreshIndicator(
             onRefresh: cubit.onRefresh,
@@ -124,7 +136,7 @@ class HomePage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              'since quitting (May 16, 2025)',
+                              'since quitting (${formatTimestamp(cubit.list[index].timestamp!)})',
                               style: fontService.s16w400White(context).copyWith(
                                     color: Colors.white,
                                   ),

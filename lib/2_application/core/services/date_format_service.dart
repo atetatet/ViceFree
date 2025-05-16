@@ -49,6 +49,11 @@ int stringDateToTimestamp(String dateString) {
   return (dateTime.millisecondsSinceEpoch ~/ 1000).round();
 }
 
+String formatTimestamp(int timestamp) {
+  final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  return DateFormat('MMMM d, y').format(date); // May 16, 2025
+}
+
 String formatToDateTimeStringWithFormatMMDDYYY(String dateString) {
   DateTime dateTime;
   try {
