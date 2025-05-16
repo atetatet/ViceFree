@@ -163,7 +163,7 @@ class HomePage extends StatelessWidget {
         Image.asset('assets/images/dashboard.png'),
         SizedboxService.h20,
         Text(
-          'Quit your vices with ViceFree. Track progress, set goals, and stay motivated with personalized tips and a supportive community. Start your journey today!',
+          'Quit your vices with ViceFree. Track progress and stay motivated. Start your journey today!',
           style: fontService.s16w400(context),
           textAlign: TextAlign.center,
         ),
