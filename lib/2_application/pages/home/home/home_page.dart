@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
           width: MediaQuery.sizeOf(context).width,
           child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
-              // TODO: implement listener
+              if (state is UpdateTime) {}
             },
             builder: (context, state) {
               if (state is Loading) {
@@ -109,7 +109,7 @@ class HomePage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
-                      height: 200,
+                      height: 250,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Color(
@@ -130,7 +130,7 @@ class HomePage extends StatelessWidget {
                             ),
                             Text(
                               timeAgo(cubit.list[index].timestamp!),
-                              style: fontService.s50w700(context).copyWith(
+                              style: fontService.s32w700(context).copyWith(
                                     color: Colors.white,
                                   ),
                             ),

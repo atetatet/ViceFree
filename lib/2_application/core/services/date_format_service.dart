@@ -16,25 +16,72 @@ String formatToDateTimeString(String dateString) {
   return formattedDate;
 }
 
+// String timeAgo(int timestamp) {
+//   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+//   DateTime now = DateTime.now();
+
+//   Duration difference = now.difference(dateTime);
+
+//   if (difference.inSeconds < 60) {
+//     return '${difference.inSeconds} second${difference.inSeconds == 1 ? '' : 's'} ';
+//   } else if (difference.inMinutes < 60) {
+//     return '${difference.inMinutes} minute${difference.inMinutes == 1 ? '' : 's'} ';
+//   } else if (difference.inHours < 24) {
+//     return '${difference.inHours} hour${difference.inHours == 1 ? '' : 's'} ';
+//   } else if (difference.inDays < 30) {
+//     return '${difference.inDays} day${difference.inDays == 1 ? '' : 's'} ';
+//   } else if (difference.inDays < 365) {
+//     return '${(difference.inDays / 30).round()} month${(difference.inDays / 30).round() == 1 ? '' : 's'} ago';
+//   } else {
+//     return '${(difference.inDays / 365).round()} year${(difference.inDays / 365).round() == 1 ? '' : 's'} ago';
+//   }
+// }
+
 String timeAgo(int timestamp) {
   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   DateTime now = DateTime.now();
 
-  Duration difference = now.difference(dateTime);
+  int years = now.year - dateTime.year;
+  int months = now.month - dateTime.month;
+  int days = now.day - dateTime.day;
+  int hours = now.hour - dateTime.hour;
+  int minutes = now.minute - dateTime.minute;
+  int seconds = now.second - dateTime.second;
 
-  if (difference.inSeconds < 60) {
-    return '${difference.inSeconds} second${difference.inSeconds == 1 ? '' : 's'} ';
-  } else if (difference.inMinutes < 60) {
-    return '${difference.inMinutes} minute${difference.inMinutes == 1 ? '' : 's'} ';
-  } else if (difference.inHours < 24) {
-    return '${difference.inHours} hour${difference.inHours == 1 ? '' : 's'} ';
-  } else if (difference.inDays < 30) {
-    return '${difference.inDays} day${difference.inDays == 1 ? '' : 's'} ';
-  } else if (difference.inDays < 365) {
-    return '${(difference.inDays / 30).round()} month${(difference.inDays / 30).round() == 1 ? '' : 's'} ago';
-  } else {
-    return '${(difference.inDays / 365).round()} year${(difference.inDays / 365).round() == 1 ? '' : 's'} ago';
+  if (seconds < 0) {
+    seconds += 60;
+    minutes -= 1;
   }
+  if (minutes < 0) {
+    minutes += 60;
+    hours -= 1;
+  }
+  if (hours < 0) {
+    hours += 24;
+    days -= 1;
+  }
+  if (days < 0) {
+    final prevMonth = DateTime(now.year, now.month, 0);
+    days += prevMonth.day;
+    months -= 1;
+  }
+  if (months < 0) {
+    months += 12;
+    years -= 1;
+  }
+
+  List<String> parts = [];
+
+  if (years > 0) parts.add('$years year${years == 1 ? '' : 's'}');
+  if (months > 0) parts.add('$months month${months == 1 ? '' : 's'}');
+  if (days > 0) parts.add('$days day${days == 1 ? '' : 's'}');
+  if (hours > 0) parts.add('$hours hour${hours == 1 ? '' : 's'}');
+  if (minutes > 0) parts.add('$minutes minute${minutes == 1 ? '' : 's'}');
+  if (seconds > 0 || parts.isEmpty) {
+    parts.add('$seconds second${seconds == 1 ? '' : 's'}');
+  }
+
+  return '${parts.join(', ')} ago';
 }
 
 int stringDateToTimestamp(String dateString) {

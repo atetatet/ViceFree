@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:vicefree/2_application/core/services/app_config_service.dart';
 import 'package:vicefree/2_application/core/services/constants_service.dart';
 import 'package:vicefree/2_application/core/widgets/custom_error.dart';
 import 'package:vicefree/2_application/pages/main_app/main_app_page.dart';
@@ -20,12 +22,18 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+Future<void> _getEnv() async {
+  await dotenv.load(fileName: ".env");
+  // AppConfigService.initialize();
+  AppConfigService.initializeTest();
+}
+
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
   // await dotenv.load();
-  // await _getFlavour();
+  await _getEnv();
 
   // String firebaseAPIKey = dotenv.env['FirebaseAPIKey'] ?? '';
   // String firebaseAppId = dotenv.env['FirebaseAppId'] ?? '';

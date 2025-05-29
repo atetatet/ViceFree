@@ -30,6 +30,7 @@ dependencies:
   equatable: ^2.0.7
   package_info_plus: ^8.1.1
   google_mobile_ads: ^6.0.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +42,4 @@ flutter:
 
   assets:
     - assets/images/
+    - .env

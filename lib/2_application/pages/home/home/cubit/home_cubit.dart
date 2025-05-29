@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:vicefree/0_data/models/vices_model.dart';
+import 'package:vicefree/2_application/core/services/app_config_service.dart';
 import 'package:vicefree/2_application/core/services/sqflite_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,8 @@ class HomeCubit extends Cubit<HomeState> {
   List<VicesModel> list = [];
   late BannerAd bannerAd;
   bool isAdLoaded = false;
+
+  Timer? timer;
 
   Future<void> onInitial() async {
     emit(Loading());
@@ -30,7 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // test ad unit
+      adUnitId: AppConfigService.homePageBanner,
       size: AdSize.banner,
       request: AdRequest(),
       listener: BannerAdListener(
@@ -45,6 +50,13 @@ class HomeCubit extends Cubit<HomeState> {
     )..load();
 
     emit(Success());
+    startTicker();
+  }
+
+  void startTicker() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!isClosed) emit(UpdateTime());
+    });
   }
 
   Future<void> onRefresh() async {

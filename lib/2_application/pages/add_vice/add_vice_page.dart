@@ -17,7 +17,7 @@ class AddVicePageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddViceCubit(),
+      create: (context) => AddViceCubit()..onInitial(),
       child: const AddVicePage(),
     );
   }
@@ -101,33 +101,30 @@ class AddVicePage extends StatelessWidget {
               BlocConsumer<AddViceCubit, AddViceState>(
                 listener: (context, state) {
                   if (state is Saved) {
-                    toastification.show(
-                      backgroundColor: color.secondary,
+                    showDialog<void>(
                       context: context,
-                      icon: const Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                      title: Text(
-                        'Well Done!',
-                        style: fontService.s14w400White(context).copyWith(
-                              fontWeight: FontWeight.bold,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Well Done!'),
+                          content: Text(
+                            "Congratulations! You've taken a huge step by quitting ${cubit.viceNameController.text}.",
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge),
+                              onPressed: () {
+                                cubit.showInterstitialAd();
+                              },
+                              child: const Text('Close'),
                             ),
-                      ),
-                      description: Text(
-                        "Congratulations! You've taken a huge step by quitting ${cubit.viceNameController.text}.",
-                        style: fontService.s14w400White(context),
-                      ),
-                      primaryColor: Colors.white,
-                      alignment: Alignment.topCenter,
-                      showProgressBar: false,
-                      closeOnClick: true,
-                      foregroundColor: Colors.white,
-                      autoCloseDuration: const Duration(seconds: 4),
-                      callbacks: ToastificationCallbacks(
-                          onAutoCompleteCompleted: (_) {}),
+                          ],
+                        );
+                      },
                     );
-
+                  } else if (state is OnClosed) {
+                    context.pop();
                     context.replace('/home');
                   }
                 },

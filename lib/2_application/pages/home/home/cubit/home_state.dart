@@ -13,6 +13,8 @@ final class OnRefresh extends HomeState {}
 
 final class Success extends HomeState {}
 
+final class UpdateTime extends HomeState {}
+
 final class Loading extends HomeState {}
 
 final class Error extends HomeState {
